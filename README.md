@@ -13,9 +13,9 @@ If you need another database or web server or even some scm support feel free to
 
 Test run:
 
-    docker run -d -p 3000:3000 inspiredgeek/redmine-alpine
+    docker run -d -p 3000:3000 inspiredgeek/redmine-alpine:3.1
 
 More close to production run with unicorn:
 
-    docker run -d -p 8080:8080 -v redmine-files:/usr/src/redmine/files inspiredgeek/redmine-alpine:unicorn
+    docker run -d -p 8080:8080 -v redmine-files:/usr/src/redmine/files inspiredgeek/redmine-alpine:unicorn-3.1
 
