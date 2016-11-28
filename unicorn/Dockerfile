@@ -8,11 +8,16 @@ LABEL org.label-schema.docker.dockerfile="./3.2/unicorn/Dockerfile" \
         org.label-schema.vcs-url="https://github.com/inspired-geek/redmine-alpine" \
         org.label-schema.version="3.2-unicorn"
 
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk --no-cache add --upgrade \
+        --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
+        --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+        --virtual .build-deps \
 		ruby-dev \
 		build-base \
 		linux-headers \
 	&& gem install unicorn \
 	&& apk --purge del .build-deps
 
-CMD ["unicorn", "/usr/src/redmine/config.ru"]
+COPY unicorn.conf.rb /usr/src/redmine/
+
+CMD ["unicorn_rails", "-c", "/usr/src/redmine/unicorn.conf.rb", "-E", "production"]

@@ -15,11 +15,15 @@ WORKDIR /usr/src/redmine
 
 RUN addgroup -S redmine \
         && adduser -S -G redmine redmine \
-	&& apk --no-cache add \
+	&& apk --no-cache add --upgrade \
 	--repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
 	--repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
 	--virtual .run-deps \
+                musl \
+                musl-dev \
+		musl-utils \
                 mariadb-client-libs \
+		sqlite-libs \
                 imagemagick \
                 tzdata \
                 'ruby<2.4' \
