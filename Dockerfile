@@ -27,8 +27,6 @@ RUN addgroup -S redmine \
                 imagemagick \
                 tzdata \
                 'ruby<2.4' \
-		ruby-bigdecimal \
-		ruby-bundler \
                 tini \
                 su-exec \
                 bash \
@@ -48,6 +46,10 @@ RUN addgroup -S redmine \
                 curl \
                 git \
         && echo 'gem: --no-document' > /etc/gemrc \
+        && gem uninstall bundler bundle rubygems-update --all -x \
+        && gem update --system 2.6.1 \
+        && gem install bundler io-console bigdecimal  \
+        && gem uninstall rubygems-update --all -x \
         && gem update --system \
 	&& git clone -b ${BRANCH_NAME} https://github.com/redmine/redmine.git . \
         && rm -rf files/delete.me log/delete.me .git test\
